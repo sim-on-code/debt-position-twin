@@ -28,4 +28,7 @@ fi
 
 # 🔍 Stampa elenco entry keyvault (name + secrets)
 echo "🔍  Secrets in vault: $VAULT"
-az keyvault secret show --vault-name "$VAULT" --name "$SECRET_NAME" --query value -o tsv
+for SECRET_NAME in $(az keyvault secret list --vault-name "$VAULT" --query "[].name" -o tsv); do
+  VALUE=$(az keyvault secret show --vault-name "$VAULT" --name "$SECRET_NAME" --query value -o tsv)
+  echo "$SECRET_NAME = $VALUE"
+done
