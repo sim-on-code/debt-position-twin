@@ -26,24 +26,6 @@ if [[ -z "$VAULT" || "$VAULT" == "null" ]]; then
   exit 1
 fi
 
-# 🔍 Stampa elenco secrets
+# 🔍 Stampa elenco entry keyvault (name + secrets)
 echo "🔍  Secrets in vault: $VAULT"
-az keyvault secret list --vault-name "$VAULT" -o table
-
-# 🔥 Elimina tutti i secrets
-echo -e "\n⚠️  Eliminazione + purge di tutti i secrets nel vault: $VAULT"
-for secret in $(az keyvault secret list --vault-name "$VAULT" --query "[].name" -o tsv); do
-  echo "➖ Eliminazione secret: $secret"
-  az keyvault secret delete --vault-name "$VAULT" --name "$secret"
-
-  # Aspetta che il secret venga messo in stato deleted (può richiedere qualche secondo)
-  until az keyvault secret show-deleted --name "$secret" --vault-name "$VAULT" &> /dev/null; do
-    echo "⏳ In attesa che '$secret' sia in stato deleted..."
-    sleep 3
-  done
-
-  echo "🧹 Purge del secret: $secret"
-  az keyvault secret purge --vault-name "$VAULT" --name "$secret"
-done
-
-echo -e "\n✅ Tutti i secrets sono stati eliminati definitivamente."
+az keyvault secret show --vault-name "$VAULT" --name "$SECRET_NAME" --query value -o tsv
