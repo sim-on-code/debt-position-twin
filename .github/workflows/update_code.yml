@@ -39,7 +39,6 @@ jobs:
       - name: Login
         id: login
         uses: azure/login@92a5484dfaf04ca78a94597f4f19fea633851fa2
-        continue-on-error: true
         with:
           client-id: ${{ secrets.CLIENT_ID }}
           tenant-id: ${{ secrets.TENANT_ID }}
@@ -58,11 +57,11 @@ jobs:
           chmod +x ./generate_openapi.sh
           ./generate_openapi.sh
 
-      # - name: Formatting
-      #   uses: axel-op/googlejavaformat-action@v3
-      #   with:
-      #     args: "--replace"
-      #     commit-message: "Google Java format"
+      - name: Formatting
+        uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "--replace"
+          commit-message: "Google Java format"
 
 
   notify:
