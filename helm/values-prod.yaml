@@ -12,4 +12,4 @@ microservice-chart:
     SEND_SUBSCRIPTION_KEY: "gpd-d-send-subscription-key"
     GPD_ARCHIVE_SA_CONNECTION_STRING: "gpd-archive-d-sa-connection-string"
   keyvault:
-    name: gps-kv-dev
+    name: gps-kv-prod
