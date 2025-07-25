@@ -1,3 +1,2 @@
 #!/bin/bash
-
-echo "Update API file"
+echo "Hello from modified openapi.sh" 
