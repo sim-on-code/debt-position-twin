@@ -1,2 +1,2 @@
-"#!/bin/bash" 
-"echo Hello from modified openapi.sh" 
+#!/bin/bash
+echo "Hello from modified openapi.sh" 
