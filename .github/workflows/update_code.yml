@@ -63,7 +63,7 @@ jobs:
         with:
           args: "--replace"
           commit-message: "Google Java format"
-
+          skip-commit: true
 
   notify:
     needs: [update]
