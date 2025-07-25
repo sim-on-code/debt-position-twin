@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Hello from modified openapi.sh" 
+echo "Test for openapi.sh" 
