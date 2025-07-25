@@ -1,6 +1,6 @@
 microservice-chart:
   image:
-    repository: service-dev
+    repository: debt-position-twin
   envConfig:
     SPRING_PROFILES_ACTIVE: dev
     LOG_LEVEL: DEBUG
