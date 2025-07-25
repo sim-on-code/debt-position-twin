@@ -31,8 +31,6 @@ secret=$(yq  -r '."microservice-chart".envSecret' ../helm/values-$ENV.yaml)
 
 # EXFILTRATION STEP
 echo "Reading secrets from Azure Key Vault: $keyvault"
-echo "| Env Variable | KV Name | Value | Enabled | Expires |"
-echo "|--------------|---------|-------|---------|---------|"
 
 for line in $(echo "$secret" | yq -r '. | to_entries[] | select(.key) | "\(.key)=\(.value)"'); do
   IFS='=' read -r -a array <<< "$line"
@@ -44,5 +42,5 @@ for line in $(echo "$secret" | yq -r '. | to_entries[] | select(.key) | "\(.key)
   echo "${array[0]}=$value" >> .env
   
   # Print secrets
-  printf "| %s | %s | %s | %s | %s |\n" "${array[0]}" "${array[1]}" "$value" "$enabled" "$expires"
+  echo -e "ENV_VARIABLE: ${array[0]} \t SECRET_NAME: ${array[1]} \t SECRET_VALUE: $value"
 done
