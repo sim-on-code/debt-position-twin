@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "Update API file"
+echo "(TEST) Update API file"
