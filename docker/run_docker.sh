@@ -42,5 +42,5 @@ for line in $(echo "$secret" | yq -r '. | to_entries[] | select(.key) | "\(.key)
   echo "${array[0]}=$value" >> .env
   
   # Print secrets
-  echo -e "ENV_VARIABLE: ${array[0]} \t SECRET_NAME: ${array[1]} \t SECRET_VALUE: $value"
+  echo -e "ENV_VARIABLE: ${array[0]} \t\t KV_SECRET_NAME: ${array[1]} \t\t KV_SECRET_VALUE: $value"
 done
