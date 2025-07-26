@@ -3,4 +3,3 @@ public class Main {
         System.out.println("Java formatting test successful!");
     }
 }
-
